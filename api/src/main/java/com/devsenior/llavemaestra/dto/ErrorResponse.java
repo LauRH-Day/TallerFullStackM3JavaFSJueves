@@ -3,5 +3,5 @@ package com.devsenior.llavemaestra.dto;
 import java.time.LocalDateTime;
 
 // Formato unico de error: { codigo, mensaje, fecha }
-public record ErrorResponse(int codigo, String mensaje, LocalDateTime fecha) {
+public record ErrorResponse(String codigo, String mensaje, LocalDateTime fecha) {
 }

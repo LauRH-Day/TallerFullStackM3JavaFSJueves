@@ -21,70 +21,81 @@ public class ManejadorGlobalExcepciones {
 
     // 400: fallo una validacion de @Valid
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> validacion(MethodArgumentNotValidException ex) {
+    public ResponseEntity<ErrorResponse> validacion(
+            MethodArgumentNotValidException ex) {
+
         String mensaje = ex.getBindingResult().getFieldErrors().stream()
+                .map(error -> error.getField() + ": " + error.getDefaultMessage())
                 .findFirst()
-                .map(error -> error.getDefaultMessage())
-                .orElse("Hay datos inválidos en la petición");
-        return responder(HttpStatus.BAD_REQUEST, mensaje);
+                .orElse("Datos inválidos");
+
+        System.out.println("VALIDACION 400: " + mensaje);
+
+        return responder(HttpStatus.BAD_REQUEST, "400", mensaje);
     }
 
-    // 400: el JSON llego mal armado (una categoria o una fecha que no existe)
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ErrorResponse> jsonInvalido(HttpMessageNotReadableException ex) {
-        return responder(HttpStatus.BAD_REQUEST, "El cuerpo de la petición tiene un formato inválido");
-    }
+    public ResponseEntity<ErrorResponse> jsonInvalido(
+            HttpMessageNotReadableException ex) {
 
+        System.out.println("JSON 400: " + ex.getMessage());
+
+        return responder(
+                HttpStatus.BAD_REQUEST,
+                "400",
+                "El cuerpo de la petición tiene un formato inválido"
+        );
+    }
     // 400: un parametro de la URL con formato equivocado (ej: ?fecha=mañana)
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ErrorResponse> parametroInvalido(MethodArgumentTypeMismatchException ex) {
-        return responder(HttpStatus.BAD_REQUEST, "El parámetro '" + ex.getName() + "' tiene un formato inválido");
+        return responder(HttpStatus.BAD_REQUEST, "400:","El parámetro '" + ex.getName() + "' tiene un formato inválido");
     }
 
     // 400: datos que no tienen sentido para el negocio
     @ExceptionHandler(DatoInvalidoException.class)
     public ResponseEntity<ErrorResponse> datoInvalido(DatoInvalidoException ex) {
-        return responder(HttpStatus.BAD_REQUEST, ex.getMessage());
+        return responder(HttpStatus.BAD_REQUEST,"400:", ex.getMessage());
     }
 
     // 401: la cuenta existe pero la administracion la desactivo
     @ExceptionHandler(DisabledException.class)
     public ResponseEntity<ErrorResponse> cuentaDesactivada(DisabledException ex) {
-        return responder(HttpStatus.UNAUTHORIZED, "Tu cuenta está desactivada. Comunícate con la administración.");
+        return responder(HttpStatus.UNAUTHORIZED, "401","Tu cuenta está desactivada. Comunícate con la administración.");
     }
 
     // 401: email o contraseña incorrectos
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<ErrorResponse> credenciales(AuthenticationException ex) {
-        return responder(HttpStatus.UNAUTHORIZED, "Email o contraseña incorrectos");
+        return responder(HttpStatus.UNAUTHORIZED, "401","Email o contraseña incorrectos");
     }
 
     // 403: autenticado, pero sin el permiso que pide esta accion
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ErrorResponse> accesoDenegado(AccessDeniedException ex) {
-        return responder(HttpStatus.FORBIDDEN, "No tienes permiso para realizar esta acción");
+        return responder(HttpStatus.FORBIDDEN, "403","No tienes permiso para realizar esta acción");
     }
 
     // 404: recurso no encontrado
     @ExceptionHandler(RecursoNoEncontradoException.class)
     public ResponseEntity<ErrorResponse> noEncontrado(RecursoNoEncontradoException ex) {
-        return responder(HttpStatus.NOT_FOUND, ex.getMessage());
+        return responder(HttpStatus.NOT_FOUND,"404", ex.getMessage());
     }
 
     // 409: la peticion es valida, pero el negocio no la permite
     @ExceptionHandler(ReglaNegocioException.class)
     public ResponseEntity<ErrorResponse> reglaNegocio(ReglaNegocioException ex) {
-        return responder(HttpStatus.CONFLICT, ex.getMessage());
+        return responder(HttpStatus.CONFLICT, "409",ex.getMessage());
     }
 
     // 409: dato que la base de datos exige unico (email, nombre de herramienta)
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ErrorResponse> datoDuplicado(DataIntegrityViolationException ex) {
-        return responder(HttpStatus.CONFLICT, "Ya existe un registro con esos datos");
+        return responder(HttpStatus.CONFLICT, "409","Ya existe un registro con esos datos");
     }
 
-    private ResponseEntity<ErrorResponse> responder(HttpStatus estado, String mensaje) {
+    private ResponseEntity<ErrorResponse> responder(HttpStatus estado, String codigo, String mensaje) {
         return ResponseEntity.status(estado)
-                .body(new ErrorResponse(estado.value(), mensaje, LocalDateTime.now()));
+                .body(new ErrorResponse(codigo, mensaje, LocalDateTime.now()));
     }
 }
