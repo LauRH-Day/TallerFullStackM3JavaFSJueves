@@ -236,6 +236,56 @@ public class AlquilerServiceImpl implements AlquilerService {
         return convertirRespuesta(alquilerRepository.save(alquiler));
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<AlquilerResponse> listarTodos(EstadoAlquiler estado) {
+        List<Alquiler> alquileres;
+
+        if (estado == null) {
+            alquileres = alquilerRepository.findAllByOrderByCreadoEnDesc();
+        } else {
+            alquileres = alquilerRepository.findByEstadoOrderByCreadoEnDesc(estado);
+        }
+
+        return alquileres.stream()
+                .map(this::convertirRespuesta)
+                .toList();
+    }
+
+    @Override
+    @Transactional
+    public AlquilerResponse entregar(Long id) {
+        Alquiler alquiler = alquilerRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecursoNoEncontradoException("Alquiler no encontrado"));
+
+        if (alquiler.getEstado() != EstadoAlquiler.RESERVADO) {
+            throw new ReglaNegocioException(
+                    "Solo se pueden entregar alquileres en estado RESERVADO");
+        }
+
+        alquiler.setEstado(EstadoAlquiler.ENTREGADO);
+
+        return convertirRespuesta(alquilerRepository.save(alquiler));
+    }
+
+    @Override
+    @Transactional
+    public AlquilerResponse devolver(Long id) {
+        Alquiler alquiler = alquilerRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecursoNoEncontradoException("Alquiler no encontrado"));
+
+        if (alquiler.getEstado() != EstadoAlquiler.ENTREGADO) {
+            throw new ReglaNegocioException(
+                    "Solo se pueden recibir devoluciones de alquileres en estado ENTREGADO");
+        }
+
+        alquiler.setEstado(EstadoAlquiler.DEVUELTO);
+
+        return convertirRespuesta(alquilerRepository.save(alquiler));
+    }
+
     // --------------------------------------------------
     // MÉTODOS AUXILIARES
     // --------------------------------------------------
@@ -269,5 +319,8 @@ public class AlquilerServiceImpl implements AlquilerService {
                 alquiler.getEstado(),
                 alquiler.getCreadoEn()
         );
+
+
+
     }
 }

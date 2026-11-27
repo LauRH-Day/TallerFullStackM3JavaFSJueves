@@ -29,28 +29,42 @@ public class AuthServiceImpl implements AuthService {
         this.jwtService = jwtService;
     }
 
+
     @Override
     public AuthResponse login(LoginRequest request) {
+
         Usuario usuario = usuarioRepository.findByEmail(request.email())
-                .orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(
-                        org.springframework.http.HttpStatus.UNAUTHORIZED, "Credenciales inválidas"));
+                .orElse(null);
+
+        if (usuario == null) {
+            throw new org.springframework.security.authentication.BadCredentialsException(
+                    "Email o contraseña incorrectos"
+            );
+        }
 
         if (!usuario.isActivo()) {
-            throw new DisabledException("La cuenta se encuentra desactivada");
+            throw new org.springframework.security.authentication.BadCredentialsException(
+                    "Email o contraseña incorrectos"
+            );
         }
+
         if (!passwordEncoder.matches(request.password(), usuario.getPassword())) {
-            throw new org.springframework.security.authentication.BadCredentialsException("Credenciales inválidas");
+            throw new org.springframework.security.authentication.BadCredentialsException(
+                    "Email o contraseña incorrectos"
+            );
         }
 
         String token = jwtService.generateToken(usuario);
         return new AuthResponse(token);
     }
+
     @Override
     public AuthResponse registrar(RegistroRequest request) {
         String email = request.email().trim().toLowerCase();
 
         if (usuarioRepository.findByEmail(email).isPresent()) {
-            throw new RuntimeException("Ya existe una cuenta con el email " + email);
+            throw new ReglaNegocioException(
+                    "Ya existe una cuenta con el email " + email);
         }
 
         Usuario usuario = new Usuario();

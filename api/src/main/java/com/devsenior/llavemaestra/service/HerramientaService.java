@@ -11,5 +11,7 @@ public interface HerramientaService {
         List<HerramientaResponse> listarHerramientas();
         HerramientaResponse obtenerPorId(Long id);
         HerramientaResponse cambiarEstado(Long id, boolean activa);
+        HerramientaResponse crear(HerramientaRequest request);
+        HerramientaResponse actualizar(Long id, HerramientaRequest request);
     }
 

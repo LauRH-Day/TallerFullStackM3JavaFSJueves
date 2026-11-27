@@ -1,0 +1,110 @@
+
+.alquileres-admin {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 20px;
+    color: #243447;
+  }
+  
+  .encabezado {
+    margin-bottom: 28px;
+  }
+  
+  .encabezado h1 {
+    margin-bottom: 8px;
+    color: #17364d;
+  }
+  
+  .encabezado p,
+  .estado {
+    color: #64748b;
+  }
+  
+  .filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  
+  .filtros button {
+    padding: 9px 16px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: white;
+    color: #334155;
+    cursor: pointer;
+  }
+  
+  .filtros button.activo {
+    background: #244b63;
+    border-color: #244b63;
+    color: white;
+  }
+  
+  .lista-alquileres {
+    display: grid;
+    gap: 16px;
+  }
+  
+  .tarjeta-alquiler {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 22px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background: white;
+  }
+  
+  .datos-alquiler h2 {
+    margin-top: 0;
+    color: #244b63;
+  }
+  
+  .datos-alquiler p {
+    margin: 7px 0;
+    color: #475569;
+  }
+  
+  .estado-alquiler {
+    font-weight: 700;
+  }
+  
+  .acciones {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .acciones button {
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
+  .btn-entregar {
+    background: #315b78;
+  }
+  
+  .btn-devolver {
+    background: #28745b;
+  }
+  
+  .error {
+    padding: 12px;
+    border-radius: 8px;
+    background: #fef2f2;
+    color: #991b1b;
+  }
+  
+  @media (max-width: 650px) {
+    .tarjeta-alquiler {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+  

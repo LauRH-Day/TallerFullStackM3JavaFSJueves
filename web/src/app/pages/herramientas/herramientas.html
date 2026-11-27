@@ -1,0 +1,123 @@
+
+<section class="pagina">
+  <header class="encabezado">
+    <div>
+      <h1 class="titulo-pagina">Herramientas</h1>
+      <p class="subtitulo">
+        Consulta las herramientas disponibles para alquilar.
+      </p>
+    </div>
+
+    @if (auth.puede('HERRAMIENTAS_GESTIONAR')) {
+      <a
+        routerLink="/herramientas/nueva"
+        class="btn-primary"
+        data-testid="boton-nueva-herramienta">
+        + Nueva herramienta
+      </a>
+    }
+
+    @if (gestiona()) {
+      <span class="contador">
+        {{ inactivos() }} herramientas retiradas
+      </span>
+    }
+  </header>
+
+  @if (cargando()) {
+    <p class="estado">Cargando herramientas...</p>
+  }
+
+  @if (error()) {
+    <p class="mensaje-error">{{ error() }}</p>
+  }
+
+  <nav class="filtros" aria-label="Filtrar herramientas">
+    @for (opcion of filtros; track opcion.valor) {
+      <button
+        type="button"
+        class="btn-filtro"
+        [class.activo]="filtro() === opcion.valor"
+        (click)="filtro.set(opcion.valor)">
+        {{ opcion.texto }}
+      </button>
+    }
+  </nav>
+
+  <div class="grid-herramientas">
+    @for (herramienta of herramientasFiltradas(); track herramienta.id) {
+      <article
+        class="tarjeta-herramienta"
+        data-testid="herramienta">
+
+        @if (herramienta.imagenUrl) {
+          <img
+            class="imagen-herramienta"
+            [src]="herramienta.imagenUrl"
+            [alt]="herramienta.nombre"
+            loading="lazy">
+        }
+
+        <div class="contenido-tarjeta">
+          <span class="categoria">
+            {{ nombreCategoria[herramienta.categoria] }}
+          </span>
+
+          <h2 data-testid="nombre-herramienta">
+            {{ herramienta.nombre }}
+          </h2>
+
+          <p class="descripcion">
+            {{ herramienta.descripcion || 'Sin descripción disponible' }}
+          </p>
+
+          <p class="precio">
+            <strong data-testid="precio-dia">{{ pesos(herramienta.precioDia) }}</strong>
+            <span class="subtitulo"> por día</span>
+          </p>
+          
+          <p class="unidades">
+            Unidades disponibles: {{ herramienta.unidades }}
+          </p>
+
+          <span [class.inactiva]="!herramienta.activa">
+            {{ herramienta.activa ? 'Disponible' : 'Retirada' }}
+          </span>
+
+          @if (auth.puede('HERRAMIENTAS_GESTIONAR')) {
+            <div class="acciones-admin">
+              <a
+                class="btn-editar"
+                [routerLink]="['/herramientas', herramienta.id, 'editar']"
+                data-testid="boton-editar">
+                Editar
+              </a>
+
+              <button
+                type="button"
+                class="btn-estado"
+                data-testid="boton-estado"
+                (click)="alternarEstado(herramienta)">
+                {{ herramienta.activa ? 'Retirar herramienta' : 'Reactivar herramienta' }}
+              </button>
+            </div>
+          }
+
+          @if (herramienta.activa) {
+            <a
+              *appSiPuede="'ALQUILERES_CREAR'"
+              class="boton-alquilar"
+              [routerLink]="['/herramientas', herramienta.id, 'alquilar']"
+              data-testid="boton-alquilar">
+              Alquilar
+            </a>
+          }
+        </div>
+      </article>
+    } @empty {
+      @if (!cargando()) {
+        <p class="estado">No hay herramientas para mostrar.</p>
+      }
+    }
+  </div>
+</section>

@@ -1,0 +1,65 @@
+
+<section class="pagina">
+    <header class="encabezado">
+      <div>
+        <h1 class="titulo-pagina">Clientes</h1>
+        <p class="subtitulo">Administra las cuentas registradas.</p>
+      </div>
+    </header>
+  
+    <div class="resumen">
+      <p>Clientes registrados: {{ clientes() }}</p>
+      <p>Cuentas activas: {{ activos() }}</p>
+    </div>
+  
+    @if (cargando()) {
+      <p class="estado">Cargando clientes...</p>
+    }
+  
+    @if (error()) {
+      <p class="mensaje-error">{{ error() }}</p>
+    }
+  
+    <div class="tabla-contenedor">
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Correo electrónico</th>
+            <th>Rol</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+  
+        <tbody>
+          @for (usuario of usuarios(); track usuario.id) {
+            <tr data-testid="cliente">
+              <td>{{ usuario.nombre }}</td>
+              <td>{{ usuario.email }}</td>
+              <td>{{ usuario.rol }}</td>
+              <td>{{ usuario.activo ? 'Activo' : 'Bloqueado' }}</td>
+              <td>
+                @if (!esYo(usuario)) {
+                  <button
+                    type="button"
+                    class="btn-estado"
+                    data-testid="boton-estado"
+                    (click)="alternarEstado(usuario)">
+                    {{ usuario.activo ? 'Bloquear' : 'Activar' }}
+                  </button>
+                }
+              </td>
+            </tr>
+          } @empty {
+            @if (!cargando()) {
+              <tr>
+                <td colspan="5">No hay clientes registrados.</td>
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+  

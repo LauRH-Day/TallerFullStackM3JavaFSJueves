@@ -1,0 +1,112 @@
+<section class="panel-page">
+  <header class="panel-header">
+    <div>
+      <span class="panel-etiqueta">ADMINISTRACIÓN</span>
+      <h1>Panel administrativo</h1>
+      <p>Resumen general del rendimiento de Llave Maestra.</p>
+    </div>
+    <div class="panel-icono">LM</div>
+  </header>
+
+  @if (cargando()) {
+    <div class="estado-panel">
+      <p>Cargando información del panel...</p>
+    </div>
+  } @else if (error()) {
+    <div class="estado-panel estado-error">
+      <p>{{ error() }}</p>
+    </div>
+  } @else if (resumen()) {
+    <section class="indicadores">
+      <article class="indicador indicador-ingresos">
+        <div class="indicador-superior">
+          <span>Ingresos del mes</span>
+          <span class="indicador-icono">$</span>
+        </div>
+        <strong data-testid="ingresos-mes">
+          {{ pesos(resumen()!.ingresosMes) }}
+        </strong>
+        <small>Recaudo mensual</small>
+      </article>
+
+      <article class="indicador">
+        <div class="indicador-superior">
+          <span>Alquileres activos</span>
+          <span class="indicador-icono">↗</span>
+        </div>
+        <strong data-testid="alquileres-activos">
+          {{ resumen()!.alquileresActivos }}
+        </strong>
+        <small>Alquileres en curso</small>
+      </article>
+
+      <article class="indicador indicador-alerta">
+        <div class="indicador-superior">
+          <span>Alquileres vencidos</span>
+          <span class="indicador-icono">!</span>
+        </div>
+        <strong data-testid="alquileres-vencidos">
+          {{ resumen()!.vencidos.length }}
+        </strong>
+        <small>Requieren seguimiento</small>
+      </article>
+    </section>
+
+    <section class="seccion-panel">
+      <div class="seccion-encabezado">
+        <div>
+          <span class="panel-etiqueta">SEGUIMIENTO</span>
+          <h2>Alquileres vencidos</h2>
+          <p>Reservas que necesitan atención administrativa.</p>
+        </div>
+        <span class="contador">{{ resumen()!.vencidos.length }}</span>
+      </div>
+
+      <div class="lista-vencidos">
+        @for (item of resumen()!.vencidos; track item.id) {
+          <article class="vencido" data-testid="vencido">
+            <div class="vencido-titulo">
+              <span class="estado-punto"></span>
+              <strong>{{ item.herramientaNombre }}</strong>
+            </div>
+            <span>Cliente: {{ item.clienteNombre }}</span>
+            <div class="fechas-vencido">
+              <span>Inicio: {{ item.fechaInicio }}</span>
+              <span>Fin: {{ item.fechaFin }}</span>
+            </div>
+          </article>
+        } @empty {
+          <div class="sin-resultados">
+            <span class="sin-resultados-icono">✓</span>
+            <strong>Todo está al día</strong>
+            <p data-testid="sin-vencidos">No hay alquileres vencidos.</p>
+          </div>
+        }
+      </div>
+    </section>
+
+    <section class="seccion-panel">
+      <div class="seccion-encabezado">
+        <div>
+          <span class="panel-etiqueta">RENDIMIENTO</span>
+          <h2>Herramientas más alquiladas</h2>
+          <p>Las herramientas con mayor movimiento.</p>
+        </div>
+      </div>
+
+      <div class="lista-populares">
+        @for (item of resumen()!.masAlquiladas; track item.herramienta) {
+          <article class="popular" data-testid="mas-alquilada">
+            <div class="popular-nombre">
+              <span class="popular-icono">⚒</span>
+              <span>{{ item.herramienta }}</span>
+            </div>
+            <strong>{{ item.alquileres }} alquileres</strong>
+          </article>
+        } @empty {
+          <p class="sin-populares">Todavía no hay herramientas alquiladas.</p>
+        }
+      </div>
+    </section>
+  }
+</section>

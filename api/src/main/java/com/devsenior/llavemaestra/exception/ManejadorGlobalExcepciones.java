@@ -29,7 +29,6 @@ public class ManejadorGlobalExcepciones {
                 .findFirst()
                 .orElse("Datos inválidos");
 
-        System.out.println("VALIDACION 400: " + mensaje);
 
         return responder(HttpStatus.BAD_REQUEST, "400", mensaje);
     }
@@ -38,7 +37,6 @@ public class ManejadorGlobalExcepciones {
     public ResponseEntity<ErrorResponse> jsonInvalido(
             HttpMessageNotReadableException ex) {
 
-        System.out.println("JSON 400: " + ex.getMessage());
 
         return responder(
                 HttpStatus.BAD_REQUEST,

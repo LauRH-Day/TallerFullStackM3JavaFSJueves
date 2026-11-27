@@ -1,0 +1,151 @@
+
+.form-page {
+    min-height: 100vh;
+    padding: 40px 20px;
+    background: #f4f6f8;
+  }
+  
+  .form-container {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 32px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  }
+  
+  .form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  
+  .form-header h1 {
+    margin: 0 0 8px;
+    color: #172b4d;
+    font-size: 26px;
+  }
+  
+  .form-header p {
+    margin: 0;
+    color: #64748b;
+  }
+  
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+  
+  .form-grid label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: #334155;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  
+  .full-width {
+    grid-column: 1 / -1;
+  }
+  
+  input,
+  select,
+  textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: #fff;
+    color: #1e293b;
+    font: inherit;
+  }
+  
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    border-color: #315b78;
+    box-shadow: 0 0 0 3px rgba(49, 91, 120, 0.12);
+  }
+  
+  textarea {
+    resize: vertical;
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 28px;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    padding: 11px 18px;
+    border: 0;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
+  .btn-primary {
+    background: #244b63;
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    background: #18384d;
+  }
+  
+  .btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  .btn-secondary {
+    background: #e8edf1;
+    color: #334155;
+  }
+  
+  .btn-secondary:hover {
+    background: #dbe3e9;
+  }
+  
+  .error-box {
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    background: #fef2f2;
+    color: #991b1b;
+  }
+  
+  .error-box p {
+    margin: 4px 0;
+  }
+  
+  @media (max-width: 600px) {
+    .form-container {
+      padding: 20px;
+    }
+  
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .full-width {
+      grid-column: auto;
+    }
+  
+    .form-header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+  

@@ -1,7 +1,14 @@
-# Bitácora de uso de IA
+# BITÁCORA DE USO DE INTELIGENCIA ARTIFICIAL
 
-Registra cada vez que uses una IA en el taller. **Una respuesta de IA no es evidencia; la verificación sí.**
+Proyecto: Llave Maestra
 
-| Fecha | Fase | Qué intentaba resolver | Prompt que usé | Qué acepté o rechacé | Cómo lo comprobé | Qué aprendí |
+| Fecha | Fase | Herramienta | Necesidad o problema | Orientación recibida | Cambios realizados | Resultado y verificación |
 |---|---|---|---|---|---|---|
-|  |  |  |  |  |  |  |
+| 11/11/2026 | Fase 1 – Autenticación | ChatGPT | Comprender cómo implementar el inicio de sesión con JWT y controlar el acceso según el rol del usuario. | Se recibió orientación para configurar Spring Security, generar y validar tokens JWT y proteger las rutas según los permisos. | Se implementó la autenticación, el almacenamiento del token y la protección de rutas en Angular. | Se verificó el inicio de sesión de los usuarios y el acceso diferenciado entre ADMIN y CLIENTE. |
+| 15/11/2026 | Fase 2 – Alquileres | ChatGPT | Resolver las reglas de negocio para evitar alquileres con fechas inválidas, superar los 15 días o reservar herramientas sin disponibilidad. | Se recibió ayuda para comprender los cálculos de días, los cruces de fechas y las validaciones necesarias en el backend y frontend. | Se ajustaron las validaciones de fechas, disponibilidad y límites de alquileres. | Se probaron los casos de alquiler válido, fechas incorrectas y conflictos de disponibilidad. |
+| 20/11/2026 | Fase 3 – Gestión y reportes | ChatGPT | Organizar la lógica del sistema y evitar que los controladores concentraran responsabilidades de acceso a datos y reglas de negocio. | Se recibió orientación sobre la separación entre controladores, interfaces de servicios e implementaciones, además de la organización de las consultas y reportes. | Se realizaron ajustes en la arquitectura del backend y en los servicios utilizados por Angular. | Se verificó el funcionamiento de las operaciones y la comunicación entre frontend y backend. |
+| 26/11/2026 | Fase 4 – Calidad y entrega | ChatGPT | Corregir los errores del evaluador, optimizar Angular y solucionar el problema por el cual las imágenes modificadas desaparecían al reiniciar el backend. | Se recibió orientación para eliminar instrucciones de depuración, utilizar identificadores únicos en los ciclos `@for`, aplicar carga diferida a las imágenes y revisar la inicialización de datos. | Se eliminaron `console.log` y `debugger`, se corrigieron los ciclos `@for`, se agregó `loading="lazy"` y se retiró la actualización automática de imágenes que sobrescribía los cambios guardados. | Se volvió a ejecutar el evaluador, se comprobó la compilación y se verificó que las imágenes modificadas permanecieran guardadas después de reiniciar el backend. |
+
+## Reflexión final
+
+La inteligencia artificial fue una herramienta de apoyo durante el desarrollo de Llave Maestra. Me permitió comprender errores, analizar alternativas y aprender sobre la arquitectura del backend, las validaciones de negocio y la optimización del frontend. Las sugerencias recibidas fueron revisadas y aplicadas al proyecto, y los resultados se comprobaron mediante pruebas y el evaluador automático.

@@ -1,0 +1,87 @@
+<section class="alquilar-page">
+    <div class="alquilar-container">
+      <header class="page-header">
+        <span class="eyebrow">SERVICIO DE ALQUILER</span>
+        <h1>Alquilar herramienta</h1>
+        <p>Selecciona las fechas para reservar la herramienta que necesitas.</p>
+      </header>
+  
+      @if (cargando()) {
+        <p class="estado-carga">Cargando información de la herramienta...</p>
+      } @else if (herramienta(); as h) {
+        <article class="herramienta-resumen">
+          <div>
+            <span class="campo-label">HERRAMIENTA SELECCIONADA</span>
+            <h2 data-testid="nombre-herramienta">{{ h.nombre }}</h2>
+            <p>{{ h.descripcion || 'Sin descripción disponible.' }}</p>
+          </div>
+  
+          <div class="precio-herramienta">
+            <span>Precio por día</span>
+            <strong>{{ pesos(h.precioDia) }}</strong>
+            <small>Depósito: {{ pesos(h.deposito) }}</small>
+          </div>
+        </article>
+  
+        @if (errorAlquiler()) {
+          <p class="mensaje-error" data-testid="error-alquiler">
+            {{ errorAlquiler() }}
+          </p>
+        }
+  
+        <form
+          class="form-alquiler"
+          (submit)="alquilar($event)"
+          (input)="actualizarResumen($event)"
+        >
+          <h2>Fechas del alquiler</h2>
+  
+          <div class="campos-fecha">
+            <label>
+              Fecha de inicio
+              <input
+                type="date"
+                name="fechaInicio"
+                required
+              />
+            </label>
+  
+            <label>
+              Fecha de devolución
+              <input
+                type="date"
+                name="fechaFin"
+                required
+              />
+            </label>
+          </div>
+  
+          <div class="resumen-alquiler">
+            <span>Valor estimado</span>
+            <strong data-testid="resumen-valor">
+              {{ resumenValor() || 'Selecciona las fechas' }}
+            </strong>
+            <small>El depósito se cobra adicionalmente.</small>
+          </div>
+  
+          @if (erroresFormulario().length > 0) {
+            <ul class="lista-errores" data-testid="errores-formulario">
+              @for (error of erroresFormulario(); track error) {
+                <li>{{ error }}</li>
+              }
+            </ul>
+          }
+  
+          <button type="submit" [disabled]="!h.activa">
+            Confirmar alquiler
+          </button>
+  
+          @if (!h.activa) {
+            <p class="mensaje-error">
+              Esta herramienta no está disponible para alquiler.
+            </p>
+          }
+        </form>
+      }
+    </div>
+  </section>

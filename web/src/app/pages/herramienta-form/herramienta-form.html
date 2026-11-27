@@ -1,0 +1,112 @@
+
+<section class="form-page">
+    <div class="form-container">
+      <header class="form-header">
+        <div>
+          <h1>{{ editando ? 'Editar herramienta' : 'Nueva herramienta' }}</h1>
+          <p>Completa la información de la herramienta.</p>
+        </div>
+        <button type="button" class="btn-secondary" (click)="cancelar()">
+          Volver
+        </button>
+      </header>
+      @if (errorServidor()) {
+        <p class="error-box" data-testid="error-herramienta">
+          {{ errorServidor() }}
+        </p>
+      }
+      @if (errores().length > 0) {
+        <div class="error-box" data-testid="error-herramienta">
+          @for (error of errores(); track error) {
+            <p>{{ error }}</p>
+          }
+        </div>
+      }
+  
+      <form (ngSubmit)="guardar()">
+        <div class="form-grid">
+          <label>
+            Nombre
+            <input
+              type="text"
+              name="nombre"
+              [(ngModel)]="nombre"
+              required
+              maxlength="100"
+            />
+          </label>
+  
+          <label>
+            Categoría
+            <select name="categoria" [(ngModel)]="categoria">
+              @for (cat of categorias; track cat) {
+                <option [value]="cat">{{ cat }}</option>
+              }
+            </select>
+          </label>
+  
+          <label class="full-width">
+            Descripción
+            <textarea
+              name="descripcion"
+              [(ngModel)]="descripcion"
+              rows="3"
+            ></textarea>
+          </label>
+  
+          <label>
+            Precio por día
+            <input
+              type="number"
+              name="precioDia"
+              [(ngModel)]="precioDia"
+              min="1"
+              required
+            />
+          </label>
+  
+          <label>
+            Depósito
+            <input
+              type="number"
+              name="deposito"
+              [(ngModel)]="deposito"
+              min="0"
+              required
+            />
+          </label>
+  
+          <label>
+            Unidades disponibles
+            <input
+              type="number"
+              name="unidades"
+              [(ngModel)]="unidades"
+              min="1"
+              required
+            />
+          </label>
+  
+          <label class="full-width">
+            URL de imagen
+            <input
+              type="url"
+              name="imagenUrl"
+              [(ngModel)]="imagenUrl"
+              placeholder="https://..."
+            />
+          </label>
+        </div>
+  
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" (click)="cancelar()">
+            Cancelar
+          </button>
+          <button type="submit" class="btn-primary" [disabled]="guardando()">
+            {{ guardando() ? 'Guardando...' : (editando ? 'Actualizar' : 'Crear herramienta') }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+  

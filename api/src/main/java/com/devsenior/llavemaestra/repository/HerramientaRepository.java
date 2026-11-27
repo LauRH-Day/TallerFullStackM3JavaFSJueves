@@ -11,4 +11,8 @@ import java.util.Optional;
 public interface HerramientaRepository extends JpaRepository<Herramienta, Long> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT h FROM Herramienta h WHERE h.id = :id")
-    Optional<Herramienta> findByIdForUpdate(@Param("id") Long id);}
+    Optional<Herramienta> findByIdForUpdate(@Param("id") Long id);
+    boolean existsByNombreIgnoreCase(String nombre);
+    boolean existsByNombreIgnoreCaseAndIdNot(String nombre, Long id);
+    Optional<Herramienta> findByNombreIgnoreCase(String nombre);
+}

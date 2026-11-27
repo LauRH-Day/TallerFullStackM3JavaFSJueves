@@ -1,0 +1,98 @@
+
+<section class="alquileres-admin">
+    <header class="encabezado">
+      <div>
+        <h1>Gestión de alquileres</h1>
+        <p>Consulta y administra los alquileres de los clientes.</p>
+      </div>
+    </header>
+  
+    <nav class="filtros">
+      @for (estado of estados; track estado.valor) {
+        <button
+          type="button"
+          [class.activo]="filtro === estado.valor"
+          (click)="filtrar(estado.valor)">
+          {{ estado.texto }}
+        </button>
+      }
+    </nav>
+  
+    @if (cargando()) {
+      <p class="estado">Cargando alquileres...</p>
+    }
+  
+    @if (error()) {
+      <p class="error">{{ error() }}</p>
+    }
+  
+    @if (!cargando()) {
+      <div class="lista-alquileres">
+        @for (alquiler of alquileres(); track alquiler.id) {
+          <article class="tarjeta-alquiler" data-testid="alquiler">
+            <div class="datos-alquiler">
+              <h2>{{ alquiler.herramientaNombre }}</h2>
+  
+              <p>
+                <strong>Cliente:</strong>
+                {{ alquiler.clienteNombre }}
+              </p>
+  
+              <p>
+                <strong>Inicio:</strong>
+                {{ alquiler.fechaInicio }}
+              </p>
+  
+              <p>
+                <strong>Devolución:</strong>
+                {{ alquiler.fechaFin }}
+              </p>
+  
+              <p>
+                <strong>Días:</strong>
+                {{ alquiler.dias }}
+              </p>
+  
+              <p>
+                <strong>Valor:</strong>
+                {{ pesos(alquiler.valorTotal) }}
+              </p>
+  
+              <p>
+                <strong>Estado:</strong>
+                <span class="estado-alquiler">
+                  {{ alquiler.estado }}
+                </span>
+              </p>
+            </div>
+  
+            <div class="acciones">
+              @if (alquiler.estado === 'RESERVADO') {
+                <button
+                  type="button"
+                  class="btn-entregar"
+                  data-testid="boton-entregar"
+                  (click)="entregar(alquiler)">
+                  Entregar
+                  
+                </button>
+              }
+  
+              @if (alquiler.estado === 'ENTREGADO') {
+                <button
+                  type="button"
+                  class="btn-devolver"
+                  data-testid="boton-recibir"
+                  (click)="devolver(alquiler)">
+                  Recibir
+                </button>
+              }
+            </div>
+          </article>
+        } @empty {
+          <p class="estado">No hay alquileres para mostrar.</p>
+        }
+      </div>
+    }
+  </section>
+  

@@ -1,0 +1,54 @@
+<section class="reportes-page">
+    <header class="page-header">
+      <h1>Reportes</h1>
+      <p>Resumen de la actividad de Llave Maestra</p>
+    </header>
+  
+    @if (cargando()) {
+      <p class="mensaje">Cargando reportes...</p>
+    } @else if (error()) {
+      <p class="mensaje error">{{ error() }}</p>
+    } @else if (resumen()) {
+      <div class="indicadores">
+        <article class="indicador">
+          <span>Ingresos del mes</span>
+          <strong>{{ pesos(resumen()!.ingresosMes) }}</strong>
+        </article>
+  
+        <article class="indicador">
+          <span>Alquileres activos</span>
+          <strong>{{ resumen()!.alquileresActivos }}</strong>
+        </article>
+  
+        <article class="indicador">
+          <span>Alquileres vencidos</span>
+          <strong>{{ resumen()!.vencidos }}</strong>
+        </article>
+      </div>
+  
+      <section class="tabla-reportes">
+        <h2>Herramientas más alquiladas</h2>
+  
+        @if (resumen()!.masAlquiladas.length > 0) {
+          <table>
+            <thead>
+              <tr>
+                <th>Herramienta</th>
+                <th>Alquileres</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (item of resumen()!.masAlquiladas; track item.herramienta) {
+                <tr>
+                  <td>{{ item.herramienta }}</td>
+                  <td>{{ item.alquileres }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        } @else {
+          <p>No hay datos de herramientas alquiladas.</p>
+        }
+      </section>
+    }
+  </section>

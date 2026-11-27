@@ -1,0 +1,131 @@
+
+<section class="mis-alquileres-page">
+    <div class="alquileres-container">
+  
+      <header class="page-header">
+        <span class="eyebrow">MI CUENTA</span>
+        <h1>Mis alquileres</h1>
+        <p>Consulta tus reservas y administra tus alquileres.</p>
+      </header>
+  
+      @if (error()) {
+        <div class="mensaje-error">
+          {{ error() }}
+        </div>
+      }
+  
+      @if (cargando()) {
+        <div class="estado-carga">
+          Cargando tus alquileres...
+        </div>
+      } @else {
+        <div class="lista-alquileres">
+  
+          @for (alquiler of alquileres(); track alquiler.id) {
+            <article class="alquiler-card" data-testid="alquiler">
+  
+              <div class="alquiler-header">
+                <div>
+                  <span class="campo-label">HERRAMIENTA</span>
+                  <h2>{{ alquiler.herramientaNombre }}</h2>
+  
+                  <span
+                    class="estado"
+                    [attr.data-estado]="alquiler.estado"
+                    data-testid="estado-alquiler">
+                    {{ alquiler.estado }}
+                  </span>
+                </div>
+  
+                <span class="alquiler-id">
+                  Reserva #{{ alquiler.id }}
+                </span>
+              </div>
+  
+              <div class="alquiler-detalles">
+                <div>
+                  <span>Fecha de inicio</span>
+                  <strong>{{ alquiler.fechaInicio }}</strong>
+                </div>
+  
+                <div>
+                  <span>Fecha de devolución</span>
+                  <strong>{{ alquiler.fechaFin }}</strong>
+                </div>
+  
+                <div>
+                  <span>Duración</span>
+                  <strong>
+                    {{ alquiler.dias }}
+                    {{ alquiler.dias === 1 ? 'día' : 'días' }}
+                  </strong>
+                </div>
+  
+                <div>
+                  <span>Valor del alquiler</span>
+                  <strong>{{ pesos(alquiler.valorTotal) }}</strong>
+                </div>
+  
+                <div>
+                  <span>Depósito</span>
+                  <strong>{{ pesos(alquiler.deposito) }}</strong>
+                </div>
+              </div>
+  
+              @if (puedeCancelar(alquiler)) {
+                <div class="acciones-alquiler">
+  
+                  @if (confirmarCancelacion() === alquiler.id) {
+                    <div class="confirmacion">
+  
+                      <p>
+                        ¿Estás seguro de que deseas cancelar esta reserva?
+                      </p>
+  
+                      <div class="confirmacion-botones">
+                        <button
+                          type="button"
+                          class="btn-cancelar"
+                          data-testid="confirmar-cancelacion"
+                          (click)="cancelar(alquiler)">
+                          Sí, cancelar reserva
+                        </button>
+  
+                        <button
+                          type="button"
+                          class="btn-secundario"
+                          (click)="cerrarConfirmacion()">
+                          No, regresar
+                        </button>
+                      </div>
+  
+                    </div>
+                  } @else {
+                    <button
+                      type="button"
+                      class="btn-cancelar"
+                      data-testid="boton-cancelar"
+                      (click)="solicitarCancelacion(alquiler)">
+                      Cancelar alquiler
+                    </button>
+                  }
+  
+                </div>
+              }
+  
+            </article>
+          } @empty {
+            <div class="sin-alquileres" data-testid="sin-alquileres">
+              <h2>Aún no tienes alquileres</h2>
+              <p>
+                Cuando reserves una herramienta, aparecerá aquí.
+              </p>
+            </div>
+          }
+  
+        </div>
+      }
+  
+    </div>
+  </section>
+  

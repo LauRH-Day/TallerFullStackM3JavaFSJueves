@@ -6,9 +6,14 @@ const formatoPesos = new Intl.NumberFormat('es-CO', {
 
 // 25000 -> "$ 25.000"
 export function pesos(valor: number): string {
-  return formatoPesos.format(valor);
-}
+  const numero = Math.round(Number(valor));
 
+  if (!Number.isFinite(numero)) {
+    return '0';
+  }
+
+  return String(numero).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
 const formatoFecha = new Intl.DateTimeFormat('es-CO', {
   day: 'numeric',
   month: 'short',

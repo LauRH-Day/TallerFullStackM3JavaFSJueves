@@ -1,0 +1,226 @@
+
+.mis-alquileres-page {
+    min-height: 100vh;
+    padding: 40px 20px;
+    background: #f4f6f8;
+    color: #253247;
+  }
+  
+  .alquileres-container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  .page-header {
+    margin-bottom: 30px;
+  }
+  
+  .eyebrow,
+  .campo-label {
+    color: #718096;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+  }
+  
+  .page-header h1 {
+    margin: 10px 0;
+    color: #24364b;
+    font-size: 30px;
+  }
+  
+  .page-header p {
+    color: #718096;
+  }
+  
+  .lista-alquileres {
+    display: grid;
+    gap: 20px;
+  }
+  
+  .alquiler-card {
+    padding: 25px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 5px 18px rgb(31 45 61 / 5%);
+  }
+  
+  .alquiler-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 15px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #edf0f3;
+  }
+  
+  .alquiler-header h2 {
+    margin: 9px 0 12px;
+    color: #24364b;
+    font-size: 21px;
+  }
+  
+  .alquiler-id {
+    color: #8491a2;
+    font-size: 13px;
+  }
+  
+  .estado {
+    display: inline-block;
+    padding: 6px 11px;
+    border-radius: 20px;
+    background: #e8f1ed;
+    color: #28634f;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  
+  .estado[data-estado="ENTREGADO"] {
+    background: #e8eef8;
+    color: #345b8c;
+  }
+  
+  .estado[data-estado="DEVUELTO"] {
+    background: #edf0f2;
+    color: #566575;
+  }
+  
+  .estado[data-estado="CANCELADO"] {
+    background: #fcebea;
+    color: #a33b35;
+  }
+  
+  .alquiler-detalles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    padding: 23px 0;
+  }
+  
+  .alquiler-detalles div {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  
+  .alquiler-detalles span {
+    color: #8491a2;
+    font-size: 13px;
+  }
+  
+  .alquiler-detalles strong {
+    color: #35465d;
+    font-size: 15px;
+  }
+  
+  .acciones-alquiler {
+    padding-top: 16px;
+    border-top: 1px solid #edf0f3;
+  }
+  
+  .btn-cancelar,
+  .btn-secundario {
+    padding: 11px 17px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  
+  .btn-cancelar {
+    border: 1px solid #b94b46;
+    background: #fff;
+    color: #a33b35;
+  }
+  
+  .btn-cancelar:hover {
+    background: #fff1f0;
+  }
+  
+  .btn-secundario {
+    border: 1px solid #cbd5e0;
+    background: #fff;
+    color: #526176;
+  }
+  
+  .btn-secundario:hover {
+    background: #f1f4f7;
+  }
+  
+  .confirmacion {
+    padding: 18px;
+    border: 1px solid #f0c9c6;
+    border-radius: 9px;
+    background: #fff8f7;
+  }
+  
+  .confirmacion p {
+    margin: 0 0 15px;
+    color: #873d39;
+    font-size: 14px;
+  }
+  
+  .confirmacion-botones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .sin-alquileres {
+    padding: 55px 20px;
+    border: 1px dashed #cbd5e0;
+    border-radius: 14px;
+    background: #fff;
+    text-align: center;
+  }
+  
+  .sin-alquileres h2 {
+    color: #35465d;
+    font-size: 20px;
+  }
+  
+  .sin-alquileres p {
+    color: #8491a2;
+    font-size: 14px;
+  }
+  
+  .estado-carga {
+    padding: 40px;
+    color: #718096;
+    text-align: center;
+  }
+  
+  .mensaje-error {
+    margin-bottom: 20px;
+    padding: 14px 18px;
+    border-radius: 8px;
+    background: #fff1f0;
+    color: #a33b35;
+    font-size: 14px;
+  }
+  
+  @media (max-width: 650px) {
+    .alquiler-detalles {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+    .alquiler-header {
+      flex-direction: column;
+    }
+  
+    .page-header h1 {
+      font-size: 25px;
+    }
+  }
+  
+  @media (max-width: 400px) {
+    .alquiler-detalles {
+      grid-template-columns: 1fr;
+    }
+  
+    .confirmacion-botones {
+      flex-direction: column;
+    }
+  }
+  

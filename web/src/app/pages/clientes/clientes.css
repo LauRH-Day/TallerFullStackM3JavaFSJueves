@@ -1,0 +1,151 @@
+
+:host {
+    display: block;
+    min-height: 100%;
+    color: #263238;
+    background: #f4f6f7;
+  }
+  
+  .pagina {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 36px 28px;
+  }
+  
+  header {
+    margin-bottom: 26px;
+  }
+  
+  header h1 {
+    margin: 0;
+    color: #173b43;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.7px;
+  }
+  
+  header p {
+    margin-top: 8px;
+    color: #718087;
+  }
+  
+  .resumen {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+    gap: 18px;
+    margin-bottom: 26px;
+  }
+  
+  .resumen p {
+    margin: 0;
+    padding: 22px;
+    border: 1px solid #e5e9e9;
+    border-radius: 12px;
+    color: #718087;
+    background: #fff;
+    box-shadow: 0 4px 14px rgb(25 50 55 / 4%);
+  }
+  
+  .resumen strong {
+    display: block;
+    margin-top: 8px;
+    color: #1d5960;
+    font-size: 1.8rem;
+  }
+  
+  .tabla-contenedor {
+    overflow-x: auto;
+    border: 1px solid #e5e9e9;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 4px 14px rgb(25 50 55 / 5%);
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+  
+  thead {
+    color: #fff;
+    background: #1d5960;
+  }
+  
+  th {
+    padding: 16px 20px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+  }
+  
+  td {
+    padding: 17px 20px;
+    border-bottom: 1px solid #edf0f0;
+    color: #53646a;
+    font-size: 0.92rem;
+  }
+  
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+  
+  tbody tr:hover {
+    background: #f7f9f9;
+  }
+  
+  td:first-child {
+    color: #263f44;
+    font-weight: 600;
+  }
+  
+  td button {
+    padding: 8px 13px;
+    border: 1px solid #e7d5d2;
+    border-radius: 7px;
+    color: #9a4b45;
+    background: #fff;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  td button:hover {
+    border-color: #9a4b45;
+    background: #fbf2f1;
+  }
+  
+  .estado,
+  .mensaje-vacio {
+    padding: 22px;
+    color: #64757a;
+    text-align: center;
+  }
+  
+  .error {
+    padding: 14px 18px;
+    border: 1px solid #efcfcc;
+    border-radius: 9px;
+    color: #9a4039;
+    background: #fff5f4;
+  }
+  
+  @media (max-width: 650px) {
+    .pagina {
+      padding: 24px 14px;
+    }
+  
+    .resumen {
+      grid-template-columns: 1fr;
+    }
+  
+    th,
+    td {
+      padding: 13px 12px;
+      white-space: nowrap;
+    }
+  }
+  
